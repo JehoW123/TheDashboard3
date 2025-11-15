@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="dahlah.ico">
+    <title>✨ The Smart Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- Google Charts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+
+<body>
+    <div id="background-overlay"></div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="settings-btn" id="settings-btn">
+            <i class="fas fa-cog"></i>
+        </div>
+        <div class="settings-popup" id="settings-popup">
+            <h3>⚙️ Dashboard Settings</h3>
+            <label>Background Theme</label>
+            <select id="bg-select">
+                <option value="default">Default</option>
+                <option value="nature">🌿 Nature</option>
+                <option value="space">🌌 Space</option>
+                <option value="city">🏙️ City</option>
+                <option value="ocean">🌊 Ocean</option>
+                <option value="random">🔄 Random Daily</option>
+            </select>
+            <button id="save-bg" class="btn">💾 Save</button>
+            <button id="close-settings" class="btn btn-outline">✕ Close</button>
+        </div>
+    </div>
+
+    <!-- Center Info Grid -->
+    <div class="center-info-grid">
+        <!-- Time, Greeting & Quote (compact stack) -->
+        <div class="card glass neon time-quote-stack">
+            <div class="time" id="time">12:00:00</div>
+            <div class="date" id="date">Tuesday, Jan 1, 2025</div>
+            <div class="greeting" id="greeting">🌅 Good morning!</div>
+            <div class="compact-quote">
+                <i class="fas fa-quote-left"></i>
+                <span id="quote">"The best way to predict the future is to invent it." — Alan Kay</span>
+            </div>
+        </div>
+
+        <!-- Weather -->
+        <div class="card glass neon weather-card">
+            <div class="weather-header">
+                <h3>🌤️ Weather</h3>
+                <div class="weather-icon" id="weather-icon">🌫️</div>
+            </div>
+            <div class="weather-body">
+                <div class="weather-location" id="weather-location">—</div>
+                <div class="weather-conditions">
+                    <span class="temp" id="weather-temp">—</span>
+                    <span class="unit">°C</span>
+                    <span class="desc" id="weather-desc">—</span>
+                </div>
+                <div class="weather-details">
+                    <span>💧 <span id="weather-humidity">—</span>%</span>
+                    <span>💨 <span id="weather-wind">—</span> km/h</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Finance & Crypto (full-width below) -->
+        <div class="card glass finance-card neon full-width-card">
+            <h3>💰 Budget Tracker</h3>
+            <div class="finance-inputs">
+                <div class="input-row">
+                    <input type="number" id="income" placeholder="+ Salary" step="100" />
+                    <button id="add-income" class="btn-sm btn-success"><i class="fas fa-arrow-down"></i></button>
+                </div>
+                <div class="input-row">
+                    <input type="number" id="expense" placeholder="- Expense" step="10" />
+                    <button id="add-expense" class="btn-sm btn-danger"><i class="fas fa-arrow-up"></i></button>
+                </div>
+            </div>
+            <div class="balance">
+                <h2 id="balance">$0.00</h2>
+                <p>Current Balance</p>
+            </div>
+
+            <!-- Crypto Monitor -->
+            <!-- 💎 Ultra-Cool Crypto Tracker -->
+            <div class="crypto-tracker">
+                <h4><i class="fas fa-coins"></i> <span>Crypto Tracker</span></h4>
+
+                <div class="crypto-controls">
+                    <div class="crypto-dropdown" id="crypto-dropdown">
+                        <div class="crypto-selected" id="crypto-selected">
+                            <span class="crypto-icon">₿</span>
+                            <span class="crypto-name">Bitcoin</span>
+                            <i class="fas fa-chevron-down chevron"></i>
+                        </div>
+                        <div class="crypto-options" id="crypto-options">
+                            <div class="crypto-option" data-value="bitcoin"><span>₿</span> Bitcoin</div>
+                            <div class="crypto-option" data-value="ethereum"><span>Ξ</span> Ethereum</div>
+                            <div class="crypto-option" data-value="solana"><span>◎</span> Solana</div>
+                            <div class="crypto-option" data-value="cardano"><span>₳</span> Cardano</div>
+                        </div>
+                    </div>
+
+                    <button id="track-crypto" class="track-btn">
+                        <i class="fas fa-bell-slash"></i>
+                        <span>Alerts Off</span>
+                    </button>
+                </div>
+
+                <div class="crypto-price-row">
+                    <div class="price-display">
+                        <span class="price" id="crypto-price">—</span>
+                        <span class="unit">USD</span>
+                    </div>
+                    <span class="change-badge" id="crypto-change">—</span>
+                </div>
+
+                <div id="crypto-chart" class="crypto-chart-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lower Grid: Notes + Tasks + Budget Table -->
+    <div class="lower-grid">
+        <!-- Notes -->
+        <section class="panel notes-panel">
+            <h2><i class="fas fa-sticky-note"></i> Notes</h2>
+            <div class="panel-content">
+                <textarea id="notes-input" placeholder="📝 Jot down your thoughts..."></textarea>
+            </div>
+        </section>
+
+        <!-- ✅ NEW: Task List -->
+        <section class="panel tasks-panel">
+            <h2><i class="fas fa-tasks"></i> Tasks</h2>
+            <div class="panel-content">
+                <div class="input-row">
+                    <input type="text" id="task-input" placeholder="✏️ Add a new task..." />
+                    <button id="add-task-btn" class="btn-sm btn-primary"><i class="fas fa-plus"></i></button>
+                </div>
+                <ul id="task-list" class="task-list"></ul>
+            </div>
+        </section>
+
+        <!-- Budget Table -->
+        <section class="panel finance-table-panel">
+            <h2><i class="fas fa-file-invoice-dollar"></i> Transactions</h2>
+            <div class="panel-content">
+                <table class="budget-table" id="budget-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="budget-table-body"></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Games Panel -->
+    <section class="panel games-panel">
+        <h2><i class="fas fa-gamepad"></i> Mini Games</h2>
+        <div class="panel-content">
+            <div class="games-grid">
+                <button class="game-tile" id="tictactoe-btn">
+                    <i class="fas fa-th-large"></i><span>Tic-Tac-Toe</span>
+                </button>
+                <button class="game-tile" id="dice-btn">
+                    <i class="fas fa-dice"></i><span>Roll Dice</span>
+                </button>
+                <button class="game-tile" id="guess-btn">
+                    <i class="fas fa-question"></i><span>Guess #</span>
+                </button>
+                <button class="game-tile new-game" id="rps-btn">
+                    <i class="fas fa-hand-rock"></i><span>RPS</span>
+                </button>
+                <button class="game-tile new-game" id="memory-btn">
+                    <i class="fas fa-brain"></i><span>Memory</span>
+                </button>
+                <button class="game-tile new-game" id="2048-btn">
+                    <i class="fas fa-th"></i><span>2048 Lite</span>
+                </button>
+            </div>
+            <div id="game-area" class="game-area glass"></div>
+        </div>
+    </section>
+
+    <audio id="alert-sound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
