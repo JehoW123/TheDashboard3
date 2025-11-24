@@ -263,7 +263,7 @@ body {
   box-shadow: 0 6px 16px rgba(106, 17, 203, 0.2);
 }
 .game-tile i { font-size: 2rem; color: #8a8aff; }
-.game-tile span { font-weight: 600; font-size: 1rem; }
+.game-tile span { font-weight: 600; font-size: 1rem; color: #e0e0ff; }
 
 .game-tile.new-game { background: rgba(100, 200, 255, 0.1); border-color: #66ccff; }
 .game-tile.new-game i { color: #66ccff; }
@@ -641,4 +641,5 @@ body {
 
 .change-badge.pos { background: rgba(38, 198, 218, 0.2); color: #26c6da; }
 .change-badge.neg { background: rgba(247, 37, 133, 0.2); color: #f72585; }
+
 
